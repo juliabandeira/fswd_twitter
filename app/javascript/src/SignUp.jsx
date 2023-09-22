@@ -11,13 +11,18 @@ export default function SignUp() {
 
     createUser(username, email, password, function (response) {
       if (response.user) {
+        $('.signup-message').remove();
         $('.signup').append('<p>You may now login</p>');
       } else {
+        $('.signup-message').remove();
         $('.signup').append(
-          '<p>Ops, something happened! Please, try again.</p>'
+          "<p class='signup-message'>Ops, something happened! Please, try again.</p>"
         );
       }
     });
+    $('.username').val('');
+    $('.email').val('');
+    $('.password').val('');
   };
 
   let handleLogin = (e) => {
@@ -28,15 +33,19 @@ export default function SignUp() {
 
     createSession(username, password, function (response) {
       if (response.success) {
+        $('#message-alert').remove();
         authenticateUser(function (response) {
           if (response.authenticated == true) {
             window.location.assign('/feed');
           }
         });
       } else {
-        $('.login-form').append(
+        $('#message-alert').remove();
+        $('.login form').append(
           "<p id='message-alert'>Username or password does not match! Please, try again.</p>"
         );
+        $('.username-login').val('');
+        $('.password-login').val('');
       }
     });
   };

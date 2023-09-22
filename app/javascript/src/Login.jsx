@@ -14,17 +14,20 @@ export default function Login({ updateState }) {
     const password = $('.password-login').val();
 
     createSession(username, password, function (response) {
-      console.log(response.success);
       if (response.success) {
+        $('#message-alert').remove();
         authenticateUser(function (response) {
           if (response.authenticated == true) {
             window.location.assign('/feed');
           }
         });
       } else {
+        $('#message-alert').remove();
         $('.login-form').append(
           "<p id='message-alert'>Username or password does not match! Please, try again.</p>"
         );
+        $('.username-login').val('');
+        $('.password-login').val('');
       }
     });
   };
